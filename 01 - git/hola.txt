@@ -1,0 +1,7 @@
+add & commit
+Puedes registrar cambios (añadirlos al Index) usando
+git add <filename>
+git add .
+Este es el primer paso en el flujo de trabajo básico. Para hacer commit a estos cambios usa
+git commit -m "Commit message"
+Ahora el archivo esta incluído en el HEAD, pero aún no en tu repositorio remoto.
