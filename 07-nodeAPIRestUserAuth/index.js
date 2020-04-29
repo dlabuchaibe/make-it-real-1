@@ -17,7 +17,7 @@ const listUsers = (users)=> {
     let cadena = '';
 
     for (u in users){
-        cadena += `\nid ${users[u].id} - nombre ${users[u].name}`;
+        cadena += `\nusername ${users[u].username}`;
     }
     return cadena;
 }
@@ -28,12 +28,11 @@ const logger = (req, res, next) => {
     next();
 };
 const auth = (req, res, next) => {
-    const token = req.headers.token;
-    //BUSCAR EL TOKEN EN EL ARREGLO TOKENS
-    true ? 
+    const token = req.headers['token'];
+    tokens.includes(token) ? 
         next()
     :
-        res.sendStatus(500)
+        res.status(500).send('Usuario no autorizado')
 
 };
 
@@ -55,7 +54,7 @@ app.get('/users', auth, (req, res)=>{
 app.get('/users/:id', auth, (req, res)=>{
     res
     .status(200)
-    .send(`Este es el usuario ${req.params.id}`)
+    .send(`El usuario en la posición ${id} es ${users[id].username}`)
 });
 app.post('/users',(req, res)=>{
     let user = {
@@ -68,14 +67,12 @@ app.post('/users',(req, res)=>{
     .send(`El usuario ${user.username} fue creado`);
 });
 app.post('/users/login', (req, res)=>{
-    let user = {
-        username: req.body.username,
-        password: req.body.password
-    };
-    //VERIFICAR SI EL OBEJTO USER EXISTE EN EL ARREGLO USERS
-    if(true){   
-        const r = Math.random*100;
-        tokens.push(r);
+    const username = req.body.username;
+    const password = req.body.password;
+    //buscar el usuario a autenticar en el objeto users
+    if(!!users.find(user => user.username === username && user.password === password)){   
+        const r = Math.random();
+        tokens.push(r.toString());
         res
         .status(200)
         .send(`{token: ${r} }`);
