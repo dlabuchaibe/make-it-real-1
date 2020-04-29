@@ -21,9 +21,16 @@ const listUsers = (users)=> {
     return cadena;
 }
 
+//middlewares
+const logger = (req, res, next) => {
+    console.log("Hubo una petición HTTP");
+    next();
+};
+
 //config
 app.use(nocache());
 app.use(bodyParser.json());
+app.use(logger);
 
 //routes
 app.get('/', (req, res)=>{
@@ -49,13 +56,6 @@ app.post('/users',(req, res)=>{
     res
     .status(200)
     .send(`El usuario ${person.name} con id ${person.id} fue creado`);
-});
-
-app.put('/users',(req, res)=>{
-
-});
-app.delete('/users',(req, res)=>{
-    
 });
 
 //server
