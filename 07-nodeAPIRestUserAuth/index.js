@@ -7,6 +7,7 @@ Midleware:
 - Eliminar usuario
 Archivos:
 - Loguear la información de las peticiones en un archivo de texto
+formato: {fecha:"xxx", "peticion":"xxxx", "headers":"xxxx", "body":"xxxx"}
 - Leer un archivo de texto para pre-cargar usuarios
 Seguridad
 - jwt 
