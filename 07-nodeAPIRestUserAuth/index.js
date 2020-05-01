@@ -5,19 +5,15 @@ Midleware:
 - Logout 
 - Actualizar usuario
 - Eliminar usuario
-Archivos:
-- Loguear la información de las peticiones en un archivo de texto
-formato: {fecha:"xxx", "peticion":"xxxx", "headers":"xxxx", "body":"xxxx"}
-- Leer un archivo de texto para pre-cargar usuarios
 Seguridad
 - jwt 
 - bcrypt: encriptar las contraseñas
 */
-
 //modules
 const express = require('express');
 const nocache = require('nocache');
 const bodyParser = require('body-parser');
+const fs = require('fs');
 
 const config = require('./config');
 
@@ -25,7 +21,7 @@ const config = require('./config');
 const app = express();
 
 //variables
-const usersArray = [];
+let usersArray = [];
 const tokensArray = [];
 
 //functions
@@ -40,10 +36,17 @@ const listUsers = (users)=> {
 
 //middlewares
 const logger = (req, res, next) => {
-    console.log(new Date());
-    console.log(req.method);
-    console.log(req.headers);
-    console.log(req.body);
+    const log = {
+        fecha:new Date(), 
+        peticion:req.method, 
+        headers:req.headers, 
+        body:req.body
+    };
+    fs.appendFile(`./${config.files.path}/${config.files.filename.log}`, `${JSON.stringify(log)},`, (err) => {
+        if(err){
+            console.log("Ocurrió un error escribiendo en el archivo");
+        }
+    });
     next();
 };
 const auth = (req, res, next) => {
@@ -116,5 +119,12 @@ app.use(logger);
 
 //server
 app.listen(config.port, ()=>{
+    fs.readFile(`./${config.files.path}/${config.files.filename.users}`, 'utf8', (err, data)=>{
+        if(err){
+            console.log("Ocurrió un error leyendo el archivo");
+        }
+        usersArray = JSON.parse(data);
+    });
+
     console.log('Servidor iniciado');
 });
