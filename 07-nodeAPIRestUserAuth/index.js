@@ -39,7 +39,10 @@ const listUsers = (users)=> {
 
 //middlewares
 const logger = (req, res, next) => {
+    console.log(new Date());
+    console.log(req.method);
     console.log(req.headers);
+    console.log(req.body);
     next();
 };
 const auth = (req, res, next) => {
