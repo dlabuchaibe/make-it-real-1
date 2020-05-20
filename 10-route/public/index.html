@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html><head>
+    <meta charset="UTF-8">
+    <title>Usuarios</title>
+    <script src="main.js"></script>
+    </head>
+    <body>
+        <div>    
+            <h2>Weather</h2>
+            <form onsubmit="return false;">
+                <p><label>City</label><br /><input type="input" name="city" id="city" value="Barranquilla" /></p>
+                <p><button onclick="getWeather()">Send</button></p>
+            </form> 
+        </div>
+        <div>    
+            <div id="weather">
+            </div> 
+        </div>
+        <hr />
+
+        <div>    
+            <h2>New tweet</h2>
+            <form onsubmit="return false;">
+                <p><label>Content</label><br /><input type="input" name="content" id="content" /></p>
+                <p><button onclick="newTweet()">Send</button></p>
+            </form> 
+        </div>
+
+        <div>    
+            <h2>Tweet list</h2>
+            <div id="tweets">
+            </div> 
+            <p><button onclick="loadTweets()">Refresh</button></p>
+        </div>
+    </body>
+</html>    
