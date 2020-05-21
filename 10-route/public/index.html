@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Twitter</title>
+    <script src="main.js"></script>
+</head>
+<body>
+    <h1>My Twitter</h1>
+    
+    <h2>Clima</h2>
+    <form onsubmit="return false">
+        <p><label>Ciudad <input type="email" id="city" value="" /></label></p>
+        <p><button onclick="getWeather()">Consultar</button></p>
+    </form>
+    <div id="weather"></div>
+    
+    <hr />
+    
+    <h2>Tweets</h2>
+    <form onsubmit="return false">
+        <p><label>Contenido <input type="text" id="content" value="" /></label></p>
+        <p><button onclick="newTweet()">Enviar</button></p>
+    </form>
+    <div id="tweets"></div>
+
+
+</body>
+</html>

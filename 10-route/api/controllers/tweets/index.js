@@ -20,7 +20,7 @@ router.route('/')
         };
         //llamado a guardar tweet
         tweetsModule.newTweet(tweet);
-        res.status(200).send('El tweet ha sido creado');
+        res.status(200).send({message: 'El tweet ha sido creado'});
     });
 router.route('/:id')
     .get((req, res)=>{
