@@ -6,12 +6,10 @@ const config = require('./../../../config');
 router.route('/:city')
     .get((req, res)=>{
         const city = req.params.city;
-        fetch(`http://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${config.weatherApiKey}`)
-        .then((res) => {
-            res.json()
-        })
-        .then((json) =>{                
-            res.send(json);
+        fetch(`http://api.openweathermap.org/data/2.5/weather?q=${city}&units=metric&appid=${config.weatherApiKey}`)
+        .then((res) => res.json())
+        .then((json) =>{               
+            res.send({temp:json.main.temp});
         });
     });
 

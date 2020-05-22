@@ -1,28 +1,29 @@
 const newTweet = () => {
-    //se define la ruta hacia donde se enviará la petición
-    const url = '/api/tweets';
     //se construye el objeto que se enviará al API
     const tweet = {
         content: document.getElementById('content').value,
         userId: 1
     };
-    //se hace la petición con Fetch
-    fetch(url, {
-        method: 'POST', //se define que es de tipo POST 
-        body: JSON.stringify(tweet), //se convierte en String el objeto que se va a enviar
-        headers:{
-          'Content-Type': 'application/json'
-        }
-      })
-      .then(res => res.json())
-      //respuesta con error
-      .catch(error => console.error('Error:', error))
-      //respuesta exitosa
-      .then(response => {
-          getTweets();
-          document.getElementById('content').value = '';
-          alert('El tweet ha sido enviado');
-      });
+    if(tweet.content!==''){
+        //se define la ruta hacia donde se enviará la petición
+        const url = '/api/tweets';
+        //se hace la petición con Fetch
+        fetch(url, {
+            method: 'POST', //se define que es de tipo POST 
+            body: JSON.stringify(tweet), //se convierte en String el objeto que se va a enviar
+            headers:{
+            'Content-Type': 'application/json'
+            }
+        })
+        .then(res => res.json())
+        //respuesta con error
+        .catch(error => console.error('Error:', error))
+        //respuesta exitosa
+        .then(response => {
+            getTweets();
+            document.getElementById('content').value = '';
+        });
+    }    
 };
 
 const getTweets = () => {
@@ -33,14 +34,30 @@ const getTweets = () => {
         //se recibe el array de respuesta, se recorre y se arma un string 
         //para mostrar el resultado
         const html = response.map(tweet => {
-           return `<p> - ${tweet.content}<br />${tweet.date}</p>`
-        });
+           return `<li class="list-group-item">${tweet.content}<br /><small>${tweet.date}</small></li>`
+        }).join(" ");
         //el string construido se agrega en el div con id tweets
-        document.getElementById('tweets').innerHTML = html;
+        document.getElementById('tweets').innerHTML = `<ul class="list-group">
+                                                        <li class="list-group-item active">Tweets</li>
+                                                        ${html}
+                                                        </ul>`;
     });
 };
 
 const getWeather = () => {
     const city = document.getElementById('city').value;
-    //console.log(`Consultar el clima de la ciudad ${city}`);
+    document.getElementById('weather').innerHTML = '';
+    if(city !== ''){
+        const url = `/api/weather/${city}`;
+        fetch(url)
+        .then(res => res.json())
+        .then(response => {
+            const html = `El clima de ${city} es ${response.temp}°C`;
+            document.getElementById('weather').innerHTML = html;
+            document.getElementById('city').value = '';
+        });
+    }else{
+        const html = `Por favor ingrese el nombre de una ciudad`;
+        document.getElementById('weather').innerHTML = html;
+    }
 };
