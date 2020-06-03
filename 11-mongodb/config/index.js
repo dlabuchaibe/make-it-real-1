@@ -8,6 +8,7 @@ const config = {
         name: 'db_twitter'
     },
     weatherApiKey:'ca684dfccee70c9b47f45029164a4a75',
-    saltRounds: 10
+    saltRounds: 10,
+    tokenKey: "my-secret-key"
 }
 module.exports = config;

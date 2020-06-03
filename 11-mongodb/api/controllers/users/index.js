@@ -1,11 +1,13 @@
 const express = require('express');
 const bcrypt = require('bcryptjs');
+const jwt = require('jsonwebtoken');
 const router = express.Router();
 const User = require('./../../models/users');
 const config = require('./../../../config');
+const auth = require('./../../middlewares/auth');
 
 router.route('/')
-    .get((req, res)=>{
+    .get(auth, (req, res)=>{
         User.find({})
         .then(users=>{
             res.status(200).send(users);
@@ -39,18 +41,18 @@ router.route('/')
 
         
     })
-    .put((req, res)=>{
+    .put(auth, (req, res)=>{
 
         res.status(200);
     })
-    .delete((req, res)=>{
+    .delete(auth, (req, res)=>{
         User.remove({})
         .then(()=>{
             res.status(200).send({message: 'Todos los usuarios han sido eliminados'});
         });
     });
 router.route('/:id')
-    .get((req, res)=>{
+    .get(auth, (req, res)=>{
         const id = req.params.id;
         User.find({_id: id})
         .then(user=>{
@@ -60,12 +62,33 @@ router.route('/:id')
             res.status(400).send({message: 'No existe el usuario'});
         })
     })
-    .delete((req, res)=>{
+    .delete(auth, (req, res)=>{
         const id = req.params.id;
         User.remove({_id: id})
         .then(()=>{
             res.status(200).send({message: `El usuario con id: ${id} ha sido eliminado`});
         });
+    });
+
+
+    router.route('/login')
+    .post((req, res)=>{
+        const user = {
+            username: req.body.username,
+            password: req.body.password
+        };
+        User.find({username: user.username})
+        .then(users=>{
+            if (bcrypt.compareSync(user.password, users[0].password)){
+                const token = jwt.sign({username: user.username}, config.tokenKey);
+                res.status(200).send(`{token: ${token} }`);
+            }else{
+                res.status(500).send({message: 'Contraseña inválida'});
+            }
+        })
+        .catch(err=>{
+            res.status(500).send({message: 'Nombre de usuario inválido'});
+        })
     });
 
 module.exports = router;

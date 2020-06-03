@@ -2,8 +2,6 @@ const express = require('express');
 const router = express.Router();
 const Tweet = require('./../../models/tweets');
 
-//referencio el móudlo que contiene la función para obtener la fecha
-const dateUtilities = require('./../../utilities/date');
 
 router.route('/')
     .get((req, res)=>{
@@ -15,8 +13,7 @@ router.route('/')
     .post((req, res)=>{
         //crear el objeto que se va a guardar
         const tweet = {
-            content: req.body.content,
-            date: dateUtilities.getDate()
+            content: req.body.content
         };
 
         Tweet.find({content: tweet.content})
