@@ -80,7 +80,7 @@ router.route('/:id')
         User.find({username: user.username})
         .then(users=>{
             if (bcrypt.compareSync(user.password, users[0].password)){
-                const token = jwt.sign({username: user.username}, config.tokenKey);
+                const token = jwt.sign({_id: users[0]._id}, config.tokenKey);
                 res.status(200).send(JSON.stringify({token: token}));
             }else{
                 res.status(500).send({message: 'Contraseña inválida'});

@@ -7,6 +7,7 @@ const auth = (req, res, next) => {
     let decoded;    
     try{
         decoded = jwt.verify(token, config.tokenKey);
+        req._id = decoded._id;
     }catch(error){
         decoded = false;
     }

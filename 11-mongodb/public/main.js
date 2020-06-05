@@ -62,30 +62,32 @@ const newUser = () => {
 
 const newTweet = () => {
     const token = localStorage.getItem('token');
-    const tweet = {
-        content: document.getElementById('content').value
-    };
-    if(tweet.content!==''){
-        //se define la ruta hacia donde se enviará la petición
-        const url = '/api/tweets';
-        //se hace la petición con Fetch
-        fetch(url, {
-            method: 'POST', //se define que es de tipo POST 
-            body: JSON.stringify(tweet), //se convierte en String el objeto que se va a enviar
-            headers:{
-            'Content-Type': 'application/json',
-            'x-access-token': token
-            }
-        })
-        .then(res => res.json())
-        //respuesta con error
-        .catch(error => console.error('Error:', error))
-        //respuesta exitosa
-        .then(response => {
-            getTweets();
-            document.getElementById('content').value = '';
-        });
-    }    
+    if(token){
+        const tweet = {
+            content: document.getElementById('content').value
+        };
+        if(tweet.content!==''){
+            //se define la ruta hacia donde se enviará la petición
+            const url = '/api/tweets';
+            //se hace la petición con Fetch
+            fetch(url, {
+                method: 'POST', //se define que es de tipo POST 
+                body: JSON.stringify(tweet), //se convierte en String el objeto que se va a enviar
+                headers:{
+                'Content-Type': 'application/json',
+                'x-access-token': token
+                }
+            })
+            .then(res => res.json())
+            //respuesta con error
+            .catch(error => console.error('Error:', error))
+            //respuesta exitosa
+            .then(response => {
+                getTweets();
+                document.getElementById('content').value = '';
+            });
+        }
+    }        
 };
 
 const getTweets = () => {
@@ -96,7 +98,11 @@ const getTweets = () => {
         //se recibe el array de respuesta, se recorre y se arma un string 
         //para mostrar el resultado
         const html = response.map(tweet => {
-           return `<li class="list-group-item"><a href="/tweets.html?id=${tweet._id}">${tweet.content}</a><br /><small>${tweet.date}</small></li>`
+           return `<li class="list-group-item">
+                                            <a href="/tweets.html?id=${tweet._id}">${tweet.content}</a>
+                                            <br /><small>${tweet.createdAt}</small>
+                                            <br /><small>${tweet.user.name}</small>
+                    </li>`
         }).join(" ");
         //el string construido se agrega en el div con id tweets
         document.getElementById('tweets').innerHTML = `<ul class="list-group">

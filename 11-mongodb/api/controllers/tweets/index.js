@@ -1,21 +1,24 @@
 const express = require('express');
 const router = express.Router();
 const Tweet = require('./../../models/tweets');
+const User = require('./../../models/users');
+const auth  = require('./../../middlewares/auth');
 
 
 router.route('/')
     .get((req, res)=>{
-        Tweet.find({})
-        .then(tweets=>{
-            res.status(200).send(tweets);
+        Tweet.find({}, (err, tweets)=>{
+            User.populate(tweets, {path: 'user'},(err, tweets)=>{
+                res.status(200).send(tweets);
+            })
         })
     })
-    .post((req, res)=>{
+    .post(auth, (req, res)=>{
         //crear el objeto que se va a guardar
         const tweet = {
-            content: req.body.content
+            content: req.body.content,
+            user: req._id
         };
-
         Tweet.find({content: tweet.content})
         .then(tweets=>{
             if(tweets.length>0){
@@ -31,7 +34,7 @@ router.route('/')
 
         
     })
-    .put((req, res)=>{
+    .put(auth, (req, res)=>{
         const tweet = {
             id: req.body.id,
             content: req.body.content
@@ -60,7 +63,7 @@ router.route('/:id')
             res.status(400).send({message: 'No existe el elemento'});
         })
     })
-    .delete((req, res)=>{
+    .delete(auth, (req, res)=>{
         const id = req.params.id;
         Tweet.remove({_id: id})
         .then(()=>{
