@@ -1,3 +1,61 @@
+const login = () => {
+    const url = '/api/users/login';
+    const user = {
+        username: document.getElementById('login-username').value,
+        password: document.getElementById('login-password').value
+    }
+    document.getElementById('login-password').value = '';
+    fetch(url, {
+        method: 'POST',
+        body: JSON.stringify(user), 
+        headers:{
+            'Content-Type': 'application/json'
+        }
+    })
+    .then(res=> res.json())
+    .then(response=>{
+        if(!!response.token){
+            document.getElementById('login-username').value = '';
+            alert('Bienvenido!');
+        }else{
+            alert('Datos inválidos');
+        }    
+    })
+    .catch(err=>{
+        alert('Datos inválidos');
+    })
+};
+
+const newUser = () => {
+    console.log('newUser');
+    const url = '/api/users';
+    const user = {
+        name: document.getElementById('name').value,
+        email: document.getElementById('email').value,
+        username: document.getElementById('username').value,
+        password: document.getElementById('password').value
+    }
+    document.getElementById('password').value = '';
+    document.getElementById('passwordConfirm').value = '';
+    fetch(url, {
+        method: 'POST',
+        body: JSON.stringify(user), 
+        headers:{
+            'Content-Type': 'application/json'
+        }
+    })
+    .then(res=> res.json())
+    .then(response=>{
+        document.getElementById('name').value = '';
+        document.getElementById('email').value = '';
+        document.getElementById('username').value = '';
+        alert('Usuario creado!');
+    })
+    .catch(err=>{
+        alert('Ocurrió un erro al crear el usurio');
+    })
+};
+
 const newTweet = () => {
     //se construye el objeto que se enviará al API
     const tweet = {
@@ -44,8 +102,7 @@ const getTweets = () => {
     });
 };
 
-const getWeather = () => {
-    const city = document.getElementById('city').value;
+const getWeather = (city) => {
     document.getElementById('weather').innerHTML = '';
     if(city !== ''){
         const url = `/api/weather/${city}`;
@@ -54,7 +111,6 @@ const getWeather = () => {
         .then(response => {
             const html = `El clima de ${city} es ${response.temp}°C`;
             document.getElementById('weather').innerHTML = html;
-            document.getElementById('city').value = '';
         });
     }else{
         const html = `Por favor ingrese el nombre de una ciudad`;
