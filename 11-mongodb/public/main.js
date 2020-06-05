@@ -16,6 +16,10 @@ const login = () => {
     .then(response=>{
         if(!!response.token){
             document.getElementById('login-username').value = '';
+            document.getElementById('card-tweets').style.display = 'block';
+            document.getElementById('card-login').style.display = 'none';
+            document.getElementById('card-signup').style.display = 'none';
+            localStorage.setItem('token',response.token);
             alert('Bienvenido!');
         }else{
             alert('Datos inválidos');
@@ -52,15 +56,14 @@ const newUser = () => {
         alert('Usuario creado!');
     })
     .catch(err=>{
-        alert('Ocurrió un erro al crear el usurio');
+        alert('Ocurrió un error al crear el usurio');
     })
 };
 
 const newTweet = () => {
-    //se construye el objeto que se enviará al API
+    const token = localStorage.getItem('token');
     const tweet = {
-        content: document.getElementById('content').value,
-        userId: 1
+        content: document.getElementById('content').value
     };
     if(tweet.content!==''){
         //se define la ruta hacia donde se enviará la petición
@@ -70,7 +73,8 @@ const newTweet = () => {
             method: 'POST', //se define que es de tipo POST 
             body: JSON.stringify(tweet), //se convierte en String el objeto que se va a enviar
             headers:{
-            'Content-Type': 'application/json'
+            'Content-Type': 'application/json',
+            'x-access-token': token
             }
         })
         .then(res => res.json())
