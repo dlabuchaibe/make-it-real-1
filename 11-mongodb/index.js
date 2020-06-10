@@ -10,8 +10,8 @@ app.use('/api', api);
 app.use('/api/v1', api);
 app.use(express.static('./public'));
 
-mongoose.connect(`mongodb://${config.db.host}:${config.db.port}/${config.db.name}`, {useNewUrlParser: true, useUnifiedTopology: true})
+mongoose.connect(`mongodb+srv://${config.db.user}:${config.db.password}@${config.db.host}/${config.db.name}?retryWrites=true&w=majority`, {useNewUrlParser: true, useUnifiedTopology: true})
 
-app.listen(config.server.port, ()=>{
+app.listen(process.env.PORT || config.server.port, ()=>{
     console.log("Servidor iniciado ...")
-});
+}); 
