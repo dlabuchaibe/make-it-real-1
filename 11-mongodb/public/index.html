@@ -8,15 +8,24 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
     <link rel="stylesheet" type="text/css" href="style.css" />
 </head>
-<body onload="getTweets(); getWeather('Barranquilla')">
+<body onload="getTweets(); getWeather('Barranquilla'); checkLogin();">
     <nav class="navbar navbar-dark bg-primary">
-        <span class="navbar-brand mb-0 h1">My Twitter</span>
+        <div class="container">
+          <div class="d-flex">
+            <div class="">
+              <span class="navbar-brand mb-0 h1">My Twitter</span>
+            </div>
+            <div class="">
+              <a href="#" class="text-white" onclick="logout()" id="logout" style="display: none;"><small>Cerrar sesión</small></a>
+            </div>
+          </div>  
+        </div>  
     </nav>
     <div class="container">
         <div class="row justify-content-md-center"></div>
         <div class="row">
           <div class="col-sm">
-            <div class="card" id="card-login">
+            <div class="card" id="card-login" style="display: none;">
               <div class="card-body">
                 <h5 class="card-title">Inicio de sesión</h5>     
                   <form onsubmit="return false">
@@ -26,7 +35,7 @@
                   </form>
                 </div>
               </div> 
-              <div class="card" style="display: none;" id="card-tweets">
+              <div class="card" id="card-tweets" style="display: none;">
                 <div class="card-body">
                   <h5 class="card-title">Nuevo tweet</h5> 
                   <form onsubmit="return false">
@@ -48,7 +57,7 @@
                   <div id="weather" class="alert alert-primary" role="alert"></div>
               </div>
             </div>
-            <div class="card" id="card-signup">
+            <div class="card" id="card-signup" style="display: none;">
               <div class="card-body">
                 <h5 class="card-title">Registro</h5>                  
                   <form onsubmit="return false">
