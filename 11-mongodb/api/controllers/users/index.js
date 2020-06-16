@@ -15,7 +15,7 @@ router.route('/')
     })
     .post((req, res)=>{
         const password = req.body.password;
-        const salt = bcrypt.genSaltSync(config.saltRounds);
+        const salt = bcrypt.genSaltSync(parseInt(config.saltRounds));
         const hash = bcrypt.hashSync(password, salt);
 
         const user = {
