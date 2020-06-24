@@ -4,14 +4,16 @@ $(document).ready(() => {
     getTweets();
     
     $('#logout').click(()=>{
-        logout();
+        setTimeout(()=>{logout()}, 2000);
     });
     $('#btn-login').click(()=>{
+        $('#btn-login').hide();
+        $('#spinner-login').show();
         const user = {
             username: $('#login-username').val(),
             password: $('#login-password').val()
         };
-        login(user);
+        setTimeout(()=>{login(user)}, 2000);
     });
     
     $('.jcarousel').jcarousel();
@@ -75,6 +77,8 @@ const checkLogin = () => {
 
 const logout = () =>{
     localStorage.removeItem('token');
+    $('#spinner-login').hide();
+    $('#btn-login').show();
     $('#card-tweets').hide();
     $('#logout').hide();
     $('#card-login').show();
@@ -98,6 +102,8 @@ const login = (user) => {
     })
     .fail(()=>{
         alert('Autenticación no válida');
+        $('#spinner-login').hide();
+        $('#btn-login').show();
     })
     .always(()=>{
         $('login-password').val('');
