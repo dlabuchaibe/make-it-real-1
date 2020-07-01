@@ -2,7 +2,7 @@ import React, {useState} from 'react';
 import './index.css';
 
 
-function Login() {
+function Login(props) {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
 
@@ -11,11 +11,28 @@ function Login() {
       username: username,
       password: password
     };
-    console.table(user);
+    const url = `${process.env.REACT_APP_API_URL}/api/users/login`;
+    fetch(url,{
+      method: 'POST',
+      body: JSON.stringify(user),
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    })
+    .then(res => res.json())
+    .then(json => {
+      if(!!json.token){
+        localStorage.setItem('token', json.token);
+        props.setAuth(true);
+      }else{
+        console.log("Datos no válidos");
+      }
+    })
   }
 
   return (
     <div>
+      <h2>Inicio de sesión</h2>
       <form>
         <p>
           <input 

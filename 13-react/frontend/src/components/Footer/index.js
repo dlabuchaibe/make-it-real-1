@@ -4,7 +4,7 @@ import './index.css';
 function Footer() {
   return (
     <footer>
-
+      <p>Todos los derechos reservados</p>
     </footer>
   );
 }
