@@ -1,4 +1,5 @@
 import React, {useState} from 'react';
+import {Link} from 'react-router-dom';
 import './index.css';
 
 
@@ -49,10 +50,14 @@ function Login(props) {
             onChange={event => {setPassword(event.target.value)}}
             placeholder="password" /></p>
         <p>
+          <p><Link to="/passwordRecovery">¿Olvidaste tu clave?</Link></p>
+    
           <button 
             onClick={()=>{handleSubmit()}}
             type="button"
           >Enviar</button></p>
+           <p>¿No tienes cuenta? <Link to="/signup">Crea una ahora</Link></p>
+    
       </form>
     </div>
   );
