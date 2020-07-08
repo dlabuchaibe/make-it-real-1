@@ -1,6 +1,7 @@
 import React, {useState} from 'react';
 import {Link} from 'react-router-dom';
 import {NotificationContainer, NotificationManager} from 'react-notifications';
+import axios from 'axios';
 import 'react-notifications/lib/notifications.css';
 import './index.css';
 
@@ -15,21 +16,15 @@ function Login(props) {
       password: password
     };
     const url = `${process.env.REACT_APP_API_URL}/api/users/login`;
-    fetch(url,{
-      method: 'POST',
-      body: JSON.stringify(user),
-      headers: {
-        'Content-Type': 'application/json'
-      }
-    })
-    .then(res => res.json())
-    .then(json => {
-      if(!!json.token){
-        NotificationManager.success('Bienvenid@', 'Éxito', 10000);
-        /*setTimeout(()=>{
-          localStorage.setItem('token', json.token);
+    axios.post(url,user)
+    .then(response => {
+      const token = response.data.token;
+      if(!!token){
+        NotificationManager.success('Bienvenid@', 'Éxito');
+        setTimeout(()=>{
+          localStorage.setItem('token', token);
           props.setAuth(true);
-        }, 3000);*/
+        }, 3000);
         
       }else{
         NotificationManager.error('Datos no válidos', 'Error');

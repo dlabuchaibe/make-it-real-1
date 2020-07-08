@@ -5,6 +5,10 @@ import logo from './../../assets/images/logo.svg';
 import './index.css';
 
 function Header(props) {
+  const logout = () =>{
+    localStorage.removeItem('token');
+    props.setAuth(false);
+  }
   return (
   <header>
       <Navbar bg="dark" variant="dark">
@@ -19,7 +23,7 @@ function Header(props) {
             />{' '}
             My Twitter
           </Link>
-          <p><button onClick={()=>{props.setAuth(false)}}>Cerrar sesión</button></p>
+          <p><button onClick={()=>{logout()}}>Cerrar sesión</button></p>
             
         </Navbar.Brand>
       </Navbar>

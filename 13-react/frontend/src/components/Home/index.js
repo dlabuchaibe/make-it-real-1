@@ -10,7 +10,7 @@ function Header(props) {
   return (
     <Container className="home">
       <Row>
-        <Col className="col col-left">
+        <Col xs={8} className="col col-left">
           <h1>Bienvenidos a Twitter</h1>
           <p>Ingresa ahora</p>
           <p>Sigue lo que te interesa</p>
