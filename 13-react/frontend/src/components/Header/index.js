@@ -19,6 +19,8 @@ function Header(props) {
             />{' '}
             My Twitter
           </Link>
+          <p><button onClick={()=>{props.setAuth(false)}}>Cerrar sesión</button></p>
+            
         </Navbar.Brand>
       </Navbar>
     </header>

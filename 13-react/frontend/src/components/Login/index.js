@@ -1,5 +1,7 @@
 import React, {useState} from 'react';
 import {Link} from 'react-router-dom';
+import {NotificationContainer, NotificationManager} from 'react-notifications';
+import 'react-notifications/lib/notifications.css';
 import './index.css';
 
 
@@ -23,10 +25,14 @@ function Login(props) {
     .then(res => res.json())
     .then(json => {
       if(!!json.token){
-        localStorage.setItem('token', json.token);
-        props.setAuth(true);
+        NotificationManager.success('Bienvenid@', 'Éxito', 10000);
+        /*setTimeout(()=>{
+          localStorage.setItem('token', json.token);
+          props.setAuth(true);
+        }, 3000);*/
+        
       }else{
-        console.log("Datos no válidos");
+        NotificationManager.error('Datos no válidos', 'Error');
       }
     })
   }
@@ -41,24 +47,27 @@ function Login(props) {
             name="" 
             value={username} 
             onChange={event => {setUsername(event.target.value)}}
-            placeholder="username" /></p>
+            placeholder="username" />
+        </p>
         <p>
           <input 
             type="password" 
             name="" 
             value={password} 
             onChange={event => {setPassword(event.target.value)}}
-            placeholder="password" /></p>
+            placeholder="password" />
+        </p>
+        <p><Link to="/passwordRecovery">¿Olvidaste tu clave?</Link></p>
         <p>
-          <p><Link to="/passwordRecovery">¿Olvidaste tu clave?</Link></p>
-    
           <button 
             onClick={()=>{handleSubmit()}}
             type="button"
-          >Enviar</button></p>
-           <p>¿No tienes cuenta? <Link to="/signup">Crea una ahora</Link></p>
+          >Enviar</button>
+        </p>
+          <p>¿No tienes cuenta? <Link to="/signup">Crea una ahora</Link></p>
     
       </form>
+      <NotificationContainer />
     </div>
   );
 }

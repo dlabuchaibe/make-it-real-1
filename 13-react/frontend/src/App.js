@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import {BrowserRouter, Link, Route} from 'react-router-dom';
+import {BrowserRouter, Switch, Route} from 'react-router-dom';
 
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'normalize.css';
@@ -20,15 +20,24 @@ function App() {
   }
   return (
     <BrowserRouter>
-      <Header isAuth={isAuth} />      
+    {
+          isAuth ?
+            <div> 
+              <Header isAuth={isAuth} setAuth={setAuth} />
+              <Footer />
+            </div> 
+          :
+            <Switch>
+              <Route exact path="/" component={Home}  />
+              <Route path="/signin" render={()=><Login setAuth={setAuth} />} />
+              <Route path="/signup" component={SignUp} />
+              <Route path="/passwordRecovery" component={PasswordRecovery} />
+            </Switch>
+        }
+        
       
-        <Route exact path="/" component={Home}  />
-        <Route path="/signin" render={()=><Login setAuth={setAuth} />} />
-        <Route path="/signup" component={SignUp} />
-        <Route path="/passwordRecovery" component={PasswordRecovery} />
       
       
-      <Footer />
     </BrowserRouter>
   );
 }

@@ -1,0 +1,29 @@
+.home{
+    height: 100vh;
+}
+.home .col{
+    height: 100vh;
+}
+.home .col-left{
+    background: no-repeat -190px 0px url(./../../assets/images/twitter-logo.svg);
+    background-size: cover;
+    padding-top: 200px;
+}
+.home .col-left *{
+    color: #FFF;
+}
+.home .col-right{
+    padding-top: 180px;
+}
+.home .col-right .logo{
+    width: 32px;
+}
+.home .col-right .list{
+    margin: 0;
+    padding: 0;
+}
+.home .col-right .list .list-item{
+    list-style-type: none;
+    margin: 0 0 10px 0;
+    padding: 0;
+}
