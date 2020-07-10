@@ -39,8 +39,8 @@ function Login(props) {
   return (
     <Row className="justify-content-md-center">
       <Col xs={5}>
+        <Form className="form">
         <h3>Inicia sesión en MyTwitter</h3>
-        <Form>
           <Form.Group controlId="formBasicEmail">
             <Form.Control 
               type="text" 
@@ -61,8 +61,9 @@ function Login(props) {
           <Button onClick={()=>{handleSubmit()}} variant="primary" type="button" className="button button-primary">
             Inicia sesión
           </Button>
-          <p>¿Ya tienes cuenta? <Link to="/passwordRecovery">¿Olvidaste tu contraseña?</Link></p>
-          <p>¿No tienes cuenta? <Link to="/signup">Crea una ahora</Link></p>
+          <p>&nbsp;</p>
+          <p>¿Ya tienes cuenta? <Link to="/passwordRecovery">¿Olvidaste tu contraseña?</Link>
+          <br />¿No tienes cuenta? <Link to="/signup">Crea una ahora</Link></p>
         </Form>
         <NotificationContainer />
       </Col>

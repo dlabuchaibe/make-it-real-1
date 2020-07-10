@@ -1,7 +1,15 @@
+.form{
+    background: url(./assets/images/twitter-logo.svg) 50% 0 no-repeat;
+    background-size: 20%;
+    margin-top: 80px;
+    padding-top: 100px;
+}
+
 .button{
     border-radius: 5px;
     box-shadow: 2px 13px 8px -10px rgba(0,0,0,0.6);
     display: inline-block;
+    font-size: 12px;
     padding: 5px;
     text-align: center;
     text-transform: uppercase;
