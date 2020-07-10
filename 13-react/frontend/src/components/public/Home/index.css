@@ -5,7 +5,7 @@
     height: 100vh;
 }
 .home .col-left{
-    background: no-repeat -190px 0px url(./../../assets/images/twitter-logo.svg);
+    background: no-repeat -190px 0px url(./../../../assets/images/twitter-logo.svg);
     background-size: cover;
     padding-top: 200px;
 }

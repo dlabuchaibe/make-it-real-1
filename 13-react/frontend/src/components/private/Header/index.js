@@ -1,7 +1,7 @@
 import React from 'react';
 import {Link} from 'react-router-dom';
 import Navbar from 'react-bootstrap/Navbar';
-import logo from './../../assets/images/logo.svg';
+import logo from './../../../assets/images/logo.svg';
 import './index.css';
 
 function Header(props) {

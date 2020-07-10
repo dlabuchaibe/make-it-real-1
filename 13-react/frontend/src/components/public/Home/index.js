@@ -1,15 +1,13 @@
 import React from 'react';
 import {Link} from 'react-router-dom';
-import Container from 'react-bootstrap/Container';
-import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
+import Row from 'react-bootstrap/Row';
 import './index.css';
-import logo from './../../assets/images/twitter-logo.svg'
+import logo from './../../../assets/images/twitter-logo.svg'
 
-function Header(props) {
+function Home(props) {
   return (
-    <Container className="home">
-      <Row>
+    <Row className="home">
         <Col xs={8} className="col col-left">
           <h1>Bienvenidos a Twitter</h1>
           <p>Ingresa ahora</p>
@@ -23,9 +21,8 @@ function Header(props) {
             <li className="list-item"><Link className="button button-secundary" to="/signup">Crea tu cuenta</Link></li>        
           </ul>
         </Col>
-      </Row>
-    </Container>
+    </Row>
 );
 }
 
-export default Header;
+export default Home;
