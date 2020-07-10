@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import {BrowserRouter} from 'react-router-dom';
 
 import 'bootstrap/dist/css/bootstrap.min.css';
@@ -14,6 +14,14 @@ function App() {
     localStorage.removeItem("token");
     setAuth(false);
   }
+
+  //Hook que se invoca cuando el componente se carga (se monta)
+  useEffect(()=>{
+    const token = localStorage.getItem("token");
+    if(token!==null){
+      setAuth(true);
+    }
+  }, []);
   return (
     <BrowserRouter>
         {
