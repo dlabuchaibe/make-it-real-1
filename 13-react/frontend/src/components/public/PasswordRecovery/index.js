@@ -4,8 +4,6 @@ import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import Col from 'react-bootstrap/Col';
 import Row from 'react-bootstrap/Row';
-import {NotificationContainer, NotificationManager} from 'react-notifications';
-import axios from 'axios';
 import 'react-notifications/lib/notifications.css';
 import './index.css';
 
@@ -35,7 +33,6 @@ function PasswordRecovery(props) {
           <p>&nbsp;</p>
           <p>¿Ya tienes cuenta? <Link to="/signin">Inicia sesión</Link></p>
         </Form>
-        <NotificationContainer />
       </Col>
     </Row> 
   );

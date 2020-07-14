@@ -26,7 +26,7 @@ function App() {
     <BrowserRouter>
         {
           isAuth ?
-            <Private setAuth={setAuth} /> 
+            <Private logout={logout} /> 
           :
             <Public setAuth={setAuth} />
         }

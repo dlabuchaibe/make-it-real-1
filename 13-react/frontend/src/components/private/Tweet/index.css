@@ -1,0 +1,14 @@
+.tweet{
+    border-bottom: 1px solid #CCC;
+    margin: 0 0 10px 0;
+    padding: 0 0 10px 0;
+}
+.tweet li{
+    font-size: 14pxpx;
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+}
+.tweet li:first-child{
+    font-size: 11px;
+}

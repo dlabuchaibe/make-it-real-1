@@ -1,11 +1,16 @@
-import React from 'react';
-import './index.css';
+import React from "react";
+import Navbar from "react-bootstrap/Navbar";
+import "./index.css";
 
-function Footer() {
+function Footer(props) {
   return (
     <footer>
-      <p>Todos los derechos reservados</p>
-      <p><a href="https://guias.makeitreal.camp/">Visítanos en Make It Real</a></p>
+      <Navbar fixed="bottom">
+        <Navbar.Brand>
+          <p>Todos los derechos reservados. Make It Real, 2020.</p>
+        </Navbar.Brand>
+       
+      </Navbar>
     </footer>
   );
 }
