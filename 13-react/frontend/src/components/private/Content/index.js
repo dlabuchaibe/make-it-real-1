@@ -9,9 +9,9 @@ import "./index.css";
 function Content(props) {
   return (
     <Row className="justify-content-md-center content">
-      <Col xs={3}><Dummy /></Col>
-      <Col xs={4}><Tweets /></Col>
-      <Col xs={3}><Dummy /><p>&nbsp;</p><Dummy /></Col>
+      <Col md={3}><Dummy /></Col>
+      <Col md={4}><Tweets /></Col>
+      <Col md={3}><Dummy /><p>&nbsp;</p><Dummy /></Col>
     </Row>
   );
 }

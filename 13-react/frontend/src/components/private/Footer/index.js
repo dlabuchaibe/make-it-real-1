@@ -1,5 +1,4 @@
 import React from "react";
-import Navbar from "react-bootstrap/Navbar";
 import "./index.css";
 
 function Footer(props) {

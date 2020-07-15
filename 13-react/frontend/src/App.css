@@ -19,10 +19,18 @@
     text-decoration: none;
 }
 .button-primary{
-    background: #2196f3;
+    background: rgb(29, 161, 242);
     color: #FFF;
 }
 .button-secundary{
     background: #FFF;
-    color: #2196f3;
+    color: rgb(29, 161, 242);
+}
+
+.bg-primary {
+    background-color: rgb(29, 161, 242) !important;
+}
+.btn-primary {
+    background-color: rgb(29, 161, 242);
+    border-color: rgb(29, 161, 242);
 }

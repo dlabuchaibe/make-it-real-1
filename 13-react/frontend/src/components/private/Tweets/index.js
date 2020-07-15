@@ -6,7 +6,6 @@ import './index.css';
 
 function Tweets() {
   const [tweets, setTweets] = useState([]);
-  
   useEffect(()=>{
     const url = `${process.env.REACT_APP_API_URL}/api/tweets`;
     Axios.get(url)
@@ -18,7 +17,7 @@ function Tweets() {
 
   return (
     <>
-      <NewTweet tweets={tweets} setTweets={setTweets} />
+      <NewTweet />
       <div className="tweets">
       {
         tweets ? 

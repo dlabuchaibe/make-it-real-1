@@ -11,7 +11,7 @@ router.route('/')
             User.populate(tweets, {path: 'user'},(err, tweets)=>{
                 res.status(200).send(tweets);
             })
-        })
+        }).sort( { createdAt: -1 } )
     })
     .post(auth, (req, res)=>{
         //crear el objeto que se va a guardar
