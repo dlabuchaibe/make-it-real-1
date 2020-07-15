@@ -8,8 +8,9 @@ import {
 import axios from "axios";
 import "react-notifications/lib/notifications.css";
 import "./index.css";
+import Tweets from "../Tweets";
 
-function NewTweet() {
+function NewTweet(props) {
   const [content, setContent] = useState("");
   const maxCaracteres = 230;
   const handleSubmit = () => {
@@ -29,7 +30,7 @@ function NewTweet() {
         NotificationManager.success("Tweet enviado", "Éxito");
       });
     } else {
-      NotificationManager.fanger(
+      NotificationManager.error(
         `No puede tener más de ${maxCaracteres} caracteres`,
         "Error"
       );
@@ -42,7 +43,8 @@ function NewTweet() {
       <Form className="">
         <Form.Group controlId="formBasicEmail">
           <Form.Control
-            type="text"
+            as="textarea" 
+            rows="3" 
             placeholder="¿Qué está pasando?"
             value={content}
             onChange={(event) => {

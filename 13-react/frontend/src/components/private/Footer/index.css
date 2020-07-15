@@ -1,3 +1,8 @@
-footer p{
+footer{
+    background: #FFF;
+    display: block;
+    height: 50px;
+    padding: 10px 5px;
+}footer p{
     font-size: 12px;
 }

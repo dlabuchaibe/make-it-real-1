@@ -17,8 +17,8 @@ function Tweets() {
   },[]);
 
   return (
-    <div>
-      <NewTweet />
+    <>
+      <NewTweet tweets={tweets} setTweets={setTweets} />
       <div className="tweets">
       {
         tweets ? 
@@ -27,7 +27,7 @@ function Tweets() {
           <p>No hay tweets para mostrar</p>
       }
       </div>
-    </div>
+    </>
   );
 }
 
