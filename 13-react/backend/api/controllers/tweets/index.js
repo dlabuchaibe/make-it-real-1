@@ -9,9 +9,11 @@ router.route('/')
     .get((req, res)=>{
         Tweet.find({}, (err, tweets)=>{
             User.populate(tweets, {path: 'user'},(err, tweets)=>{
-                res.status(200).send(tweets);
+                User.populate(tweets, {path:'comments.userId'}, (err, tweetsComments) => {
+                res.status(200).send(tweetsComments);  
+                })
             })
-        }).sort( { createdAt: -1 } )
+        })
     })
     .post(auth, (req, res)=>{
         //crear el objeto que se va a guardar
