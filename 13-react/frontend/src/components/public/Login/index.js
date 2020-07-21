@@ -6,6 +6,7 @@ import Col from 'react-bootstrap/Col';
 import Row from 'react-bootstrap/Row';
 import {NotificationContainer, NotificationManager} from 'react-notifications';
 import axios from 'axios';
+import Loading from './../../common/Loading';
 import 'react-notifications/lib/notifications.css';
 import './index.css';
 
@@ -13,8 +14,10 @@ import './index.css';
 function Login(props) {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
+  const [loading, setLoading] = useState(false);
 
   const handleSubmit = () => {
+    setLoading(true);
     const user = {
       username: username,
       password: password
@@ -31,40 +34,56 @@ function Login(props) {
         }, 3000);
         
       }else{
+        setTimeout(()=>{
+          setLoading(false);
+          NotificationManager.error('Datos no válidos', 'Error');
+        }, 3000)
+         }
+    })
+    .catch(err=>{
+      setTimeout(()=>{
+        setLoading(false);
         NotificationManager.error('Datos no válidos', 'Error');
-      }
+      }, 3000)
     })
   }
 
   return (
     <Row className="justify-content-md-center">
       <Col xs={5}>
-        <Form className="form">
-        <h3>Inicia sesión en MyTwitter</h3>
-          <Form.Group controlId="formBasicEmail">
-            <Form.Control 
-              type="text" 
-              placeholder="Nombre de usuario*"
-              value={username} 
-              onChange={event => {setUsername(event.target.value)}}
-              />
-          </Form.Group>
+        {
+          loading &&
+            <Loading />
+        }
+              <Form className="form">
+              <h3>Inicia sesión en MyTwitter</h3>
+              <Form.Group controlId="formBasicEmail">
+                <Form.Control 
+                  type="text" 
+                  placeholder="Nombre de usuario*"
+                  value={username} 
+                  onChange={event => {setUsername(event.target.value)}}
+                  />
+              </Form.Group>
 
-          <Form.Group controlId="formBasicPassword">
-            <Form.Control 
-              type="password" 
-              placeholder="Contraseña*"
-              value={password} 
-              onChange={event => {setPassword(event.target.value)}}
-          />
-          </Form.Group>
-          <Button onClick={()=>{handleSubmit()}} variant="primary" type="button" className="button button-primary">
-            Inicia sesión
-          </Button>
-          <p>&nbsp;</p>
-          <p>¿Ya tienes cuenta? <Link to="/passwordRecovery">¿Olvidaste tu contraseña?</Link>
-          <br />¿No tienes cuenta? <Link to="/signup">Crea una ahora</Link></p>
-        </Form>
+              <Form.Group controlId="formBasicPassword">
+                <Form.Control 
+                  type="password" 
+                  placeholder="Contraseña*"
+                  value={password} 
+                  onChange={event => {setPassword(event.target.value)}}
+              />
+              </Form.Group>
+              <Button onClick={()=>{handleSubmit()}} variant="primary" type="button" className="button button-primary">
+                Inicia sesión
+              </Button>
+              <p>&nbsp;</p>
+              <p>¿Ya tienes cuenta? <Link to="/passwordRecovery">¿Olvidaste tu contraseña?</Link>
+              <br />¿No tienes cuenta? <Link to="/signup">Crea una ahora</Link></p>
+            </Form>
+        
+
+        
         <NotificationContainer />
       </Col>
     </Row> 

@@ -13,7 +13,7 @@ router.route('/')
                 res.status(200).send(tweetsComments);  
                 })
             })
-        })
+        }).sort({createdAt: -1});
     })
     .post(auth, (req, res)=>{
         //crear el objeto que se va a guardar
@@ -54,16 +54,25 @@ router.route('/')
             res.status(200).send({message: 'Todos los tweets han sido eliminados'});
         });
     });
-router.route('/:id')
+router.route('/:username')
     .get((req, res)=>{
-        const id = req.params.id;
-        Tweet.find({_id: id})
-        .then(tweet=>{
-            res.status(200).send(tweet);
+        const username = req.params.username;
+        User.find({username: username})
+        .then(user=>{
+            userId = user[0]._id
+            Tweet.find({user: userId}, (err, tweets)=>{
+                User.populate(tweets, {path: 'user'},(err, tweets)=>{
+                    User.populate(tweets, {path:'comments.userId'}, (err, tweetsComments) => {
+                    res.status(200).send(tweetsComments);  
+                    })
+                })
+            }).sort({createdAt: -1});
         })
         .catch(err=>{
-            res.status(400).send({message: 'No existe el elemento'});
+            res.status(400).send({message: 'No existe el usuario'});
         })
+
+        
     })
     .delete(auth, (req, res)=>{
         const id = req.params.id;

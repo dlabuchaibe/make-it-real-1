@@ -9,26 +9,33 @@ import axios from "axios";
 import "react-notifications/lib/notifications.css";
 import "./index.css";
 
-function NewTweet() {
+function NewTweet(props) {
   const [content, setContent] = useState("");
+
   const handleSubmit = () => {
     if (content) {
       const maxCaracteres = 230;
       if (content.length <= maxCaracteres) {
-        const token = localStorage.getItem("token");
-        const config = {
-          headers: {
-            "Content-Type": "application/json",
-            "x-access-token": token,
-          },
-        };
-        const tweet = {
-          content: content,
-        };
-        const url = `${process.env.REACT_APP_API_URL}/api/tweets`;
-        axios.post(url, tweet, config).then((response) => {
-          NotificationManager.success("Tweet enviado", "Éxito");
-        });
+        if(content.length > 0){
+          const token = localStorage.getItem("token");
+          const tweet = {
+            content: content
+          };
+          const url = `${process.env.REACT_APP_API_URL}/api/tweets`;
+          axios.post(url, tweet, {
+            headers: {
+              'content-type': 'application/json',
+              'x-access-token': token
+            }
+          })
+          .then(data=>{
+            props.setTweet(content);
+            setContent("");
+            NotificationManager.success("El tweet fue enviado", "Éxito");
+          })
+        }else{
+          NotificationManager.error("Debes ingresar un texto", "Error");
+        }
       } else {
         NotificationManager.error(
           `El mensaje no puede tener más de ${maxCaracteres} caracteres`,
