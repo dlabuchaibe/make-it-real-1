@@ -6,6 +6,7 @@ import Col from 'react-bootstrap/Col';
 import Row from 'react-bootstrap/Row';
 import {NotificationContainer, NotificationManager} from 'react-notifications';
 import axios from 'axios';
+import { useHistory } from "react-router-dom";
 import Loading from './../../common/Loading';
 import 'react-notifications/lib/notifications.css';
 import './index.css';
@@ -15,6 +16,7 @@ function Login(props) {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [loading, setLoading] = useState(false);
+  const history = useHistory();
 
   const handleSubmit = () => {
     setLoading(true);
@@ -26,11 +28,14 @@ function Login(props) {
     axios.post(url,user)
     .then(response => {
       const token = response.data.token;
+      const name = response.data.name;
       if(!!token){
         NotificationManager.success('Bienvenid@', 'Éxito');
         setTimeout(()=>{
           localStorage.setItem('token', token);
+          localStorage.setItem('name', name);
           props.setAuth(true);
+          history.push("/");
         }, 3000);
         
       }else{

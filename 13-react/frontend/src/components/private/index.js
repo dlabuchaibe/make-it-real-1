@@ -3,6 +3,7 @@ import {Switch, Route} from 'react-router-dom';
 import Header from './Header';
 import Content from './Content';
 import UserTimeline from './UserTimeline';
+import Profile from './Profile';
 import Footer from './Footer';
 
 function Private(props) {
@@ -12,6 +13,7 @@ function Private(props) {
         <Header logout={props.logout} />
         <Switch>
           <Route exact path="/" component={Content} />
+          <Route path="/profile" component={Profile} />
           <Route path="/users/:username" component={UserTimeline} />
         </Switch>
         <Footer/>

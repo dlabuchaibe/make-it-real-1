@@ -12,3 +12,7 @@
 .tweet li:first-child{
     font-size: 11px;
 }
+
+.tweet .image{
+    max-width: 100%;
+}

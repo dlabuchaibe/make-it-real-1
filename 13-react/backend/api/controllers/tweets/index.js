@@ -7,19 +7,26 @@ const auth  = require('./../../middlewares/auth');
 
 router.route('/')
     .get((req, res)=>{
-        Tweet.find({}, (err, tweets)=>{
-            User.populate(tweets, {path: 'user'},(err, tweets)=>{
-                User.populate(tweets, {path:'comments.userId'}, (err, tweetsComments) => {
-                res.status(200).send(tweetsComments);  
-                })
+        Tweet.find({})
+            .populate('user', ["username"])
+            .populate('comments.userId', ["username"])
+            .sort({createdAt: -1})
+            .then(response=>{
+                res.status(200).send(response); 
             })
-        }).sort({createdAt: -1});
+            .catch(err=>{
+                res.status(500).send("ocurrió un error"); 
+            })
     })
     .post(auth, (req, res)=>{
         //crear el objeto que se va a guardar
+        const content = req.body.content;
+        const image = req.body.image;
+        const user = req._id;
         const tweet = {
-            content: req.body.content,
-            user: req._id
+            content,
+            image,
+            user
         };
         Tweet.find({content: tweet.content})
         .then(tweets=>{
@@ -60,13 +67,16 @@ router.route('/:username')
         User.find({username: username})
         .then(user=>{
             userId = user[0]._id
-            Tweet.find({user: userId}, (err, tweets)=>{
-                User.populate(tweets, {path: 'user'},(err, tweets)=>{
-                    User.populate(tweets, {path:'comments.userId'}, (err, tweetsComments) => {
-                    res.status(200).send(tweetsComments);  
-                    })
+            Tweet.find({user: userId})
+                .populate('user', ["username"])
+                .populate('comments.userId', ["username"])
+                .sort({createdAt: -1})
+                .then(response=>{
+                    res.status(200).send(response); 
                 })
-            }).sort({createdAt: -1});
+                .catch(err=>{
+                    res.status(500).send("ocurrió un error"); 
+                })
         })
         .catch(err=>{
             res.status(400).send({message: 'No existe el usuario'});

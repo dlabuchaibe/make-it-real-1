@@ -51,6 +51,16 @@ router.route('/')
             res.status(200).send({message: 'Todos los usuarios han sido eliminados'});
         });
     });
+
+    router.route('/info')
+    .get(auth, (req, res)=>{
+        const user = req._id;
+        User.find({_id: user})
+        .then(users=>{
+            res.status(200).send(users);
+        })
+    });
+
 router.route('/:id')
     .get(auth, (req, res)=>{
         const id = req.params.id;
@@ -81,7 +91,8 @@ router.route('/:id')
         .then(users=>{
             if (bcrypt.compareSync(user.password, users[0].password)){
                 const token = jwt.sign({_id: users[0]._id}, config.tokenKey);
-                res.status(200).send(JSON.stringify({token: token}));
+                const name = users[0].name;
+                res.status(200).send(JSON.stringify({name, token}));
             }else{
                 res.status(500).send({message: 'Contraseña inválida'});
             }

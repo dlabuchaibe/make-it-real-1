@@ -9,3 +9,6 @@
     margin: 0 0 5px 0;
     padding: 0;
 }
+.new-tweet .form-group .image{
+    max-width: 100%;
+}
