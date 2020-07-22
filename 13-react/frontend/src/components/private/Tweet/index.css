@@ -16,3 +16,15 @@
 .tweet .image{
     max-width: 100%;
 }
+.tweet .icons{
+    margin: 10px 0 0 0;
+}
+.tweet .icons a{
+}
+.tweet .icons a:hover{
+    color: rgb(29, 161, 242);
+    cursor: pointer;
+}
+.tweet .icons .icon{
+    margin:  0 20px 0 0;
+}

@@ -55,30 +55,30 @@ router.route('/')
     router.route('/info')
     .get(auth, (req, res)=>{
         const user = req._id;
-        User.find({_id: user})
+        User.find({_id: user}, ["username", "name", "email"])
         .then(users=>{
-            res.status(200).send(users);
+            res.status(200).send(users[0]);
         })
     });
 
-router.route('/:id')
-    .get(auth, (req, res)=>{
-        const id = req.params.id;
-        User.find({_id: id})
-        .then(user=>{
-            res.status(200).send(user);
+    router.route('/:id')
+        .get(auth, (req, res)=>{
+            const id = req.params.id;
+            User.find({_id: id})
+            .then(user=>{
+                res.status(200).send(user);
+            })
+            .catch(err=>{
+                res.status(400).send({message: 'No existe el usuario'});
+            })
         })
-        .catch(err=>{
-            res.status(400).send({message: 'No existe el usuario'});
-        })
-    })
-    .delete(auth, (req, res)=>{
-        const id = req.params.id;
-        User.remove({_id: id})
-        .then(()=>{
-            res.status(200).send({message: `El usuario con id: ${id} ha sido eliminado`});
+        .delete(auth, (req, res)=>{
+            const id = req.params.id;
+            User.remove({_id: id})
+            .then(()=>{
+                res.status(200).send({message: `El usuario con id: ${id} ha sido eliminado`});
+            });
         });
-    });
 
 
     router.route('/login')

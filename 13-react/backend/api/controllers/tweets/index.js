@@ -23,10 +23,12 @@ router.route('/')
         const content = req.body.content;
         const image = req.body.image;
         const user = req._id;
+        const likes = 0;
         const tweet = {
             content,
             image,
-            user
+            user,
+            likes
         };
         Tweet.find({content: tweet.content})
         .then(tweets=>{
@@ -55,12 +57,22 @@ router.route('/')
 
         res.status(200).send({message: 'El tweet ha sido actualizado'});
     })
-    .delete((req, res)=>{
+    .delete(auth, (req, res)=>{
         Tweet.remove({})
         .then(()=>{
             res.status(200).send({message: 'Todos los tweets han sido eliminados'});
         });
     });
+
+    router.route('/like')
+    .post(auth, (req, res)=>{
+        const id = req.body.id;
+        Tweet.update({_id: id}, { $inc: {likes: 1}})
+        .then((response)=>{
+            res.sendStatus(200);
+        })
+    });
+
 router.route('/:username')
     .get((req, res)=>{
         const username = req.params.username;

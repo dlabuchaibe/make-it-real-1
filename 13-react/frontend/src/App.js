@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import {BrowserRouter} from 'react-router-dom';
 
 import 'bootstrap/dist/css/bootstrap.min.css';
+import './assets/icons/style.css';
 import 'normalize.css';
 import './App.css';
 
