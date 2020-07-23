@@ -18,12 +18,13 @@ function Header(props) {
     localStorage.removeItem("token");
     localStorage.removeItem("name");
     localStorage.removeItem("id");
+    localStorage.removeItem("username");
     props.logout();
     history.push("/");
   };
   return (
     <header>
-      <Navbar fixed="top" bg="primary" variant="dark">
+      <Navbar bg="primary" variant="dark">
         <Navbar.Brand>
           <Link to="/">
           <img alt="" src={logo} className="d-inline-block align-top logo" />

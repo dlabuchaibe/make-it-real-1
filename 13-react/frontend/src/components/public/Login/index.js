@@ -31,6 +31,7 @@ function Login(props) {
       const token = response.data.token;
       const name = response.data.name;
       const id = response.data.id;
+      const username = response.data.username;
       if(!!token){
         addToast("Bienvenid@", {
         appearance: 'success',
@@ -40,6 +41,7 @@ function Login(props) {
           localStorage.setItem('token', token);
           localStorage.setItem('name', name);
           localStorage.setItem('id', id);
+          localStorage.setItem('username', username);
           props.setAuth(true);
           history.push("/");
         }, 3000);

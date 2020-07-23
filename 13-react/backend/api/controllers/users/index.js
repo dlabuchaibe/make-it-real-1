@@ -93,7 +93,8 @@ router.route('/')
                 const token = jwt.sign({_id: users[0]._id}, config.tokenKey);
                 const name = users[0].name;
                 const id = users[0]._id;
-                res.status(200).send(JSON.stringify({name, token, id}));
+                const username = users[0].username;
+                res.status(200).send(JSON.stringify({name, token, id, username}));
             }else{
                 res.status(500).send({message: 'Contraseña inválida'});
             }

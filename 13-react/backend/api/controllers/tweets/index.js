@@ -28,6 +28,7 @@ router
     res.json({
       tweets,
       totalPages: Math.ceil(count / limit),
+      count: count,
       currentPage: page,
       has_more: paginate.hasNextPages(req)(pageCount),
     });
@@ -50,9 +51,11 @@ router
           .status(500)
           .send({ message: "Ya existe un elemento con el mismo contenido" });
       } else {
-        const object = new Tweet(tweet);
-        object.save().then(() => {
-          res.status(200).send({ message: "El tweet ha sido creado" });
+        const newTweet = new Tweet(tweet);
+        newTweet
+        .save()
+        .then((response) => {
+           res.status(200).send(response);          
         });
       }
     });
@@ -95,31 +98,17 @@ router
   .get((req, res) => {
     const username = req.params.username;
     User.find({ username: username })
-      .then(async (user) => {
+      .then((user) => {
         userId = user[0]._id;
-        const { page = 1, limit = 10 } = req.query;
-        const tweets = await Tweet.find({ user: userId }, [
-          "content",
-          "image",
-          "createdAt",
-          "likes",
-        ])
+        Tweet.find({ user: userId }, ["content", "image", "createdAt", "likes"])
           .populate("user", ["username"])
           .populate("comments.userId", ["username"])
           .sort({ createdAt: -1 })
-          .limit(limit * 1)
-          .skip((page - 1) * limit)
-          .exec();
-
-        const count = await Tweet.countDocuments();
-        const pageCount = Math.ceil(count / req.query.limit);
-
-        res.json({
-          tweets,
-          totalPages: Math.ceil(count / limit),
-          currentPage: page,
-          has_more: paginate.hasNextPages(req)(pageCount),
-        });
+          .then((tweets) => {
+            res.json({
+              tweets,
+            });
+          });
       })
       .catch((err) => {
         res.status(400).send({ message: "No existe el usuario" });

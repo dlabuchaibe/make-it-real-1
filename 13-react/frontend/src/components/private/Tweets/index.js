@@ -1,51 +1,85 @@
-import React, {useState, useEffect} from 'react';
-import Axios from 'axios';
-import NewTweet from './../NewTweet';
-import Tweet from './../Tweet';
-import Loading from './../../common/Loading';
-import './index.css';
+import React, { useState, useEffect } from "react";
+import Axios from "axios";
+import NewTweet from "./../NewTweet";
+import Tweet from "./../Tweet";
+import Loading from "./../../common/Loading";
+import "./index.css";
 
 function Tweets() {
-  const [tweets, setTweets] = useState([]);
-  const [tweet, setTweet] = useState('');
+  const [count, setCount] = useState(0);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [hasMore, setHasMore] = useState(true);
+
+  const [tweets, setTweets] = useState("");
   const [loading, setLoading] = useState(true);
-  
+
   const loadTweets = () => {
-    const url = `${process.env.REACT_APP_API_URL}/api/tweets`;
-      Axios.get(url)
-      .then(response=>{
-        setTweets(response.data.tweets);
-        setLoading(false);
-      }  
-      );
-  }
+    if(hasMore){
+      setLoading(true);
+      setTimeout(()=>{
+
+        const url = `${process.env.REACT_APP_API_URL}/api/tweets?page=${currentPage}&limit=5`;
+        Axios.get(url).then((response) => {
+          setHasMore(response.data.has_more);
+          setTweets([...tweets, ...response.data.tweets]);
+          setCurrentPage(currentPage + 1);
+          setCount(response.data.count);
+          setLoading(false);
+        });
+
+      }, 500);
+    }  
+  };
 
   const deleteTweet = (id) => {
-    setTweets(tweets.filter(tweet=>tweet._id!==id));
-  }
+    setTweets(tweets.filter((tweet) => tweet._id !== id));
+  };
 
-  useEffect(()=>{
+  const isScrolling = () => {
+    if (
+      Math.round(window.innerHeight + document.documentElement.scrollTop) !==
+      document.documentElement.offsetHeight
+    ) {
+      return;
+    }
+    setLoading(true);
+  };
+
+  useEffect(() => {
     loadTweets();
-  },[tweet]);
+    window.addEventListener("scroll", isScrolling);
+  }, []);
+
+  useEffect(() => {
+    if (loading) loadTweets();
+  }, [loading]);
 
   return (
     <>
-      <NewTweet setTweet={setTweet} />
-      {
-        loading ? 
-          <Loading />
-        :  
-          <div className="tweets">
-          {
-            tweets ? 
-              tweets.map(tweet=><Tweet key={tweet._id} tweet={tweet} deleteTweet={deleteTweet} />)
-            :
-              <p>No hay tweets para mostrar</p>
-          }
-          </div>
+      <NewTweet setTweets={setTweets} tweets={tweets} />
+      {loading &&
+        <Loading />
       }
+        <div className="tweets">
+          {tweets ? (
+            <div>
+              {tweets.map((tweet) => (
+                <Tweet
+                  key={tweet._id}
+                  tweet={tweet}
+                  deleteTweet={deleteTweet}
+                />
+              ))}
+              <p className="more">
+                <strong>{count}</strong> tweets enviados
+              </p>
+            </div>
+          ) : (
+            <p>No hay tweets para mostrar</p>
+          )}
+        </div>
+      
     </>
   );
 }
-
 export default Tweets;

@@ -32,6 +32,7 @@ function NewTweet(props) {
       if (content.length <= maxCaracteres) {
         if (content.length > 0) {
           const token = localStorage.getItem("token");
+          const username = localStorage.getItem("username");
           const tweet = {
             content,
             image,
@@ -44,8 +45,18 @@ function NewTweet(props) {
                 "x-access-token": token,
               },
             })
-            .then((data) => {
-              props.setTweet(content);
+            .then((response) => {
+              const newTweet = {
+                _id: response.data._id,
+                content,
+                image,
+                comments: [],
+                createdAt: response.data.createdAt,
+                user: {
+                  username:username
+                }
+              }
+              props.setTweets([ newTweet,...props.tweets]);
               setContent("");
               setImage("");
             });

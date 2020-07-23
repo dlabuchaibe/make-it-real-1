@@ -1,2 +1,7 @@
-.tweets{
+.tweets .more{
+    background: rgba(29, 160, 242, 0.169);;
+    color: rgb(29, 161, 242);
+    font-size: 12px;
+    margin: 10px 0;
+    padding: 5px 10px;
 }
