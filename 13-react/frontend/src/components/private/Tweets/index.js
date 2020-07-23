@@ -42,7 +42,8 @@ function Tweets() {
     ) {
       return;
     }
-    setLoading(true);
+    if(hasMore)
+      setLoading(true);
   };
 
   useEffect(() => {
@@ -71,7 +72,11 @@ function Tweets() {
                 />
               ))}
               <p className="more">
-                <strong>{count}</strong> tweets enviados
+              {loading ? 
+                <span>cargando tweets ...</span>
+               : 
+              <span>Mostrando <strong>{tweets.length} de {count}</strong> tweets</span>
+              }
               </p>
             </div>
           ) : (

@@ -58,10 +58,10 @@ function Tweet(props) {
         </li>
       )}
       <li className="icons">
-        <a className="icon">
+        <Link className="icon" to={`/tweets/${props.tweet._id}`}>
           <span className="icon-bubble"></span>{" "}
           {props.tweet.comments ? props.tweet.comments.length : 0}{" "}
-        </a>
+        </Link>
         <a
           className="icon"
           onClick={() => {

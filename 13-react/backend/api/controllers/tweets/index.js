@@ -52,10 +52,8 @@ router
           .send({ message: "Ya existe un elemento con el mismo contenido" });
       } else {
         const newTweet = new Tweet(tweet);
-        newTweet
-        .save()
-        .then((response) => {
-           res.status(200).send(response);          
+        newTweet.save().then((response) => {
+          res.status(200).send(response);
         });
       }
     });
@@ -94,33 +92,43 @@ router.route("/like").post(auth, (req, res) => {
 });
 
 router
-  .route("/:username")
-  .get((req, res) => {
-    const username = req.params.username;
-    User.find({ username: username })
-      .then((user) => {
-        userId = user[0]._id;
-        Tweet.find({ user: userId }, ["content", "image", "createdAt", "likes"])
-          .populate("user", ["username"])
-          .populate("comments.userId", ["username"])
-          .sort({ createdAt: -1 })
-          .then((tweets) => {
-            res.json({
-              tweets,
-            });
-          });
-      })
-      .catch((err) => {
-        res.status(400).send({ message: "No existe el usuario" });
-      });
-  })
-  .delete(auth, (req, res) => {
-    const id = req.params.id;
-    Tweet.remove({ _id: id }).then(() => {
-      res
-        .status(200)
-        .send({ message: `El elemento con id: ${id} ha sido eliminado` });
+.route("/comments/:id")
+.get((req, res) => {
+  const id = req.params.id;
+  
+  Tweet.find({ _id: id }, ["content", "image", "createdAt", "likes", "comments"])
+  .populate("user", ["username"])
+  .populate("comments.userId", ["username"])
+  .sort({ createdAt: -1 })
+  .then((tweets) => {
+    res.json({
+      tweets,
     });
+  })
+  .catch((err) => {
+    res.sendStatus(500);
   });
+});
+
+router.route("/:username")
+.get((req, res) => {
+  const username = req.params.username;
+  User.find({ username: username })
+    .then((user) => {
+      userId = user[0]._id;
+      Tweet.find({ user: userId }, ["content", "image", "createdAt", "likes"])
+        .populate("user", ["username"])
+        .populate("comments.userId", ["username"])
+        .sort({ createdAt: -1 })
+        .then((tweets) => {
+          res.json({
+            tweets,
+          });
+        });
+    })
+    .catch((err) => {
+      res.status(400).send({ message: "No existe el usuario" });
+    });
+});
 
 module.exports = router;
