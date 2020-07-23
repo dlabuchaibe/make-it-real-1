@@ -32,12 +32,15 @@ function Tweet(props) {
     const tweet = {
       id: props.tweet._id,
     };
-    Axios.delete(url, tweet, {
+    Axios.delete(url, {
+      data: tweet,
       headers: {
         "content-type": "application/json",
         "x-access-token": token,
       },
-    }).then((data) => {});
+    }).then((data) => {
+      props.deleteTweet(props.tweet._id);
+    });
   };
 
   return (

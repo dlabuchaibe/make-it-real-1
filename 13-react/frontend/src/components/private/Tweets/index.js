@@ -20,6 +20,10 @@ function Tweets() {
       );
   }
 
+  const deleteTweet = (id) => {
+    setTweets(tweets.filter(tweet=>tweet._id!==id));
+  }
+
   useEffect(()=>{
     loadTweets();
   },[tweet]);
@@ -34,7 +38,7 @@ function Tweets() {
           <div className="tweets">
           {
             tweets ? 
-              tweets.map(tweet=><Tweet key={tweet._id} tweet={tweet} />)
+              tweets.map(tweet=><Tweet key={tweet._id} tweet={tweet} deleteTweet={deleteTweet} />)
             :
               <p>No hay tweets para mostrar</p>
           }

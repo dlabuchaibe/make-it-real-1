@@ -5,7 +5,6 @@ import Button from "react-bootstrap/Button";
 import Col from "react-bootstrap/Col";
 import Row from "react-bootstrap/Row";
 import axios from "axios";
-import "react-notifications/lib/notifications.css";
 import "./index.css";
 
 function NewTweet(props) {
@@ -49,10 +48,6 @@ function NewTweet(props) {
               props.setTweet(content);
               setContent("");
               setImage("");
-              addToast("Tweet enviado", {
-                appearance: 'success',
-                autoDismiss: true,
-              });
             });
         } else {
           addToast("Debes ingresar un texto", {

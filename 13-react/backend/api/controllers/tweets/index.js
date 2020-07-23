@@ -9,13 +9,18 @@ router
   .route("/")
   .get(async (req, res) => {
     const { page = 1, limit = 10 } = req.query;
-    const tweets = await Tweet.find({}, ["content", "image", "createdAt", "likes"])
-                        .populate("user", ["username"])
-                        .populate("comments.userId", ["username"])
-                        .sort({ createdAt: -1 })
-                        .limit(limit * 1)
-                        .skip((page - 1) * limit)
-                        .exec();
+    const tweets = await Tweet.find({}, [
+      "content",
+      "image",
+      "createdAt",
+      "likes",
+    ])
+      .populate("user", ["username"])
+      .populate("comments.userId", ["username"])
+      .sort({ createdAt: -1 })
+      .limit(limit * 1)
+      .skip((page - 1) * limit)
+      .exec();
 
     const count = await Tweet.countDocuments();
     const pageCount = Math.ceil(count / req.query.limit);
@@ -57,16 +62,25 @@ router
       id: req.body.id,
       content: req.body.content,
     };
-    Tweet.update({ id: tweet.id }, { content: tweet.content }).then(() => {
+    Tweet.update({ _id: tweet.id }, { content: tweet.content }).then(() => {
       res.status(200).send({ message: "El elemento fue actualizado" });
     });
 
     res.status(200).send({ message: "El tweet ha sido actualizado" });
   })
   .delete(auth, (req, res) => {
-    Tweet.remove({}).then(() => {
-      res.status(200).send({ message: "Todos los tweets han sido eliminados" });
-    });
+    const tweet = {
+      id: req.body.id,
+    };
+    console.log(tweet.id);
+    Tweet.deleteOne({ _id: tweet.id })
+      .then(() => {
+        res.status(200).send({ message: "Tweet eliminado" });
+      })
+      .catch((err) => {
+        console.log(err);
+        res.status(500).send({ message: "No fue posible eliminar el tweet" });
+      });
   });
 
 router.route("/like").post(auth, (req, res) => {
@@ -83,29 +97,33 @@ router
     User.find({ username: username })
       .then(async (user) => {
         userId = user[0]._id;
-            const { page = 1, limit = 10 } = req.query;
-            const tweets = await Tweet.find({ user: userId }, ["content", "image", "createdAt", "likes"])
-                                .populate("user", ["username"])
-                                .populate("comments.userId", ["username"])
-                                .sort({ createdAt: -1 })
-                                .limit(limit * 1)
-                                .skip((page - 1) * limit)
-                                .exec();
+        const { page = 1, limit = 10 } = req.query;
+        const tweets = await Tweet.find({ user: userId }, [
+          "content",
+          "image",
+          "createdAt",
+          "likes",
+        ])
+          .populate("user", ["username"])
+          .populate("comments.userId", ["username"])
+          .sort({ createdAt: -1 })
+          .limit(limit * 1)
+          .skip((page - 1) * limit)
+          .exec();
 
-            const count = await Tweet.countDocuments();
-            const pageCount = Math.ceil(count / req.query.limit);
+        const count = await Tweet.countDocuments();
+        const pageCount = Math.ceil(count / req.query.limit);
 
-            res.json({
-            tweets,
-            totalPages: Math.ceil(count / limit),
-            currentPage: page,
-            has_more: paginate.hasNextPages(req)(pageCount),
-            });
-        })
-    .catch((err) => {
-      res.status(400).send({ message: "No existe el usuario" });
-    });
-
+        res.json({
+          tweets,
+          totalPages: Math.ceil(count / limit),
+          currentPage: page,
+          has_more: paginate.hasNextPages(req)(pageCount),
+        });
+      })
+      .catch((err) => {
+        res.status(400).send({ message: "No existe el usuario" });
+      });
   })
   .delete(auth, (req, res) => {
     const id = req.params.id;
