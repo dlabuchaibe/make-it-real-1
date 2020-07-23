@@ -28,7 +28,9 @@ function Tweets() {
         });
 
       }, 500);
-    }  
+    }else{
+      setLoading(false);
+    }
   };
 
   const deleteTweet = (id) => {
