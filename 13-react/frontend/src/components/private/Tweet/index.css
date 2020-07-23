@@ -1,5 +1,5 @@
 .tweet{
-    border-bottom: 1px solid #CCC;
+    border-bottom: 1px dashed #CCC;
     margin: 0 0 10px 0;
     padding: 0 0 10px 0;
 }
@@ -20,6 +20,7 @@
     margin: 10px 0 0 0;
 }
 .tweet .icons a{
+    font-size: 13px;
 }
 .tweet .icons a:hover{
     color: rgb(29, 161, 242);

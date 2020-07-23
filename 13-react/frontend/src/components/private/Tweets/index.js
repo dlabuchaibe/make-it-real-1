@@ -14,7 +14,7 @@ function Tweets() {
     const url = `${process.env.REACT_APP_API_URL}/api/tweets`;
       Axios.get(url)
       .then(response=>{
-        setTweets(response.data);
+        setTweets(response.data.tweets);
         setLoading(false);
       }  
       );
@@ -40,7 +40,6 @@ function Tweets() {
           }
           </div>
       }
-        
     </>
   );
 }

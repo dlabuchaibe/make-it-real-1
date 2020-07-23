@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import Navbar from "react-bootstrap/Navbar";
 import DropdownButton from "react-bootstrap/DropdownButton";
 import Dropdown from "react-bootstrap/Dropdown";
@@ -7,6 +7,7 @@ import logo from "./../../../assets/images/logo.svg";
 import "./index.css";
 
 function Header(props) {
+  const history = useHistory();
   const [name, setName] = useState("");
 
   useEffect(()=>{
@@ -16,7 +17,9 @@ function Header(props) {
   const logout = () => {
     localStorage.removeItem("token");
     localStorage.removeItem("name");
+    localStorage.removeItem("id");
     props.logout();
+    history.push("/");
   };
   return (
     <header>
@@ -31,15 +34,15 @@ function Header(props) {
 
         <Navbar.Collapse className="justify-content-end">
         <DropdownButton id="dropdown-basic-button" title={name} className="drop">
-          <Dropdown.Item><Link to="/profile">Perfil</Link></Dropdown.Item>
+          <Dropdown.Item as={Link} to="/profile">Perfil</Dropdown.Item>
           <Dropdown.Divider />
-          <Dropdown.Item> <Link 
+          <Dropdown.Item> <span 
                 onClick={() => {
                   logout();
                 }}
               >
                 Cerrar sesión
-              </Link></Dropdown.Item>
+              </span></Dropdown.Item>
         </DropdownButton>
              
         </Navbar.Collapse>

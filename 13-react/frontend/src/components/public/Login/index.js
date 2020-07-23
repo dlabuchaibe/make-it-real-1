@@ -4,7 +4,7 @@ import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import Col from 'react-bootstrap/Col';
 import Row from 'react-bootstrap/Row';
-import {NotificationContainer, NotificationManager} from 'react-notifications';
+import { useToasts } from 'react-toast-notifications';
 import axios from 'axios';
 import { useHistory } from "react-router-dom";
 import Loading from './../../common/Loading';
@@ -13,6 +13,7 @@ import './index.css';
 
 
 function Login(props) {
+  const { addToast } = useToasts();
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [loading, setLoading] = useState(false);
@@ -29,11 +30,16 @@ function Login(props) {
     .then(response => {
       const token = response.data.token;
       const name = response.data.name;
+      const id = response.data.id;
       if(!!token){
-        NotificationManager.success('Bienvenid@', 'Éxito');
+        addToast("Bienvenid@", {
+        appearance: 'success',
+        autoDismiss: true,
+      })
         setTimeout(()=>{
           localStorage.setItem('token', token);
           localStorage.setItem('name', name);
+          localStorage.setItem('id', id);
           props.setAuth(true);
           history.push("/");
         }, 3000);
@@ -41,21 +47,27 @@ function Login(props) {
       }else{
         setTimeout(()=>{
           setLoading(false);
-          NotificationManager.error('Datos no válidos', 'Error');
+          addToast('Datos no válidos', {
+            appearance: 'error',
+            autoDismiss: true,
+          });
         }, 3000)
          }
     })
     .catch(err=>{
       setTimeout(()=>{
         setLoading(false);
-        NotificationManager.error('Datos no válidos', 'Error');
+        addToast('Datos no válidos', {
+          appearance: 'error',
+          autoDismiss: true,
+        });
       }, 3000)
     })
   }
 
   return (
     <Row className="justify-content-md-center">
-      <Col xs={5}>
+      <Col md={5}>
         {
           loading &&
             <Loading />
@@ -86,10 +98,7 @@ function Login(props) {
               <p>¿Ya tienes cuenta? <Link to="/passwordRecovery">¿Olvidaste tu contraseña?</Link>
               <br />¿No tienes cuenta? <Link to="/signup">Crea una ahora</Link></p>
             </Form>
-        
-
-        
-        <NotificationContainer />
+      
       </Col>
     </Row> 
   );

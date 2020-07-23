@@ -16,7 +16,7 @@ function UserTimeline() {
     const url = `${process.env.REACT_APP_API_URL}/api/tweets/${params.username}`;
       Axios.get(url)
       .then(response=>{
-        setTweets(response.data);
+        setTweets(response.data.tweets);
         setLoading(false);
       }  
       )

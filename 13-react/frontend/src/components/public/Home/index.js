@@ -8,12 +8,12 @@ import logo from './../../../assets/images/twitter-logo.svg'
 function Home(props) {
   return (
     <Row className="home">
-        <Col xs={8} className="col col-left">
+        <Col md={8} xs={12}  className="col col-left">
           <h1>Bienvenidos a Twitter</h1>
           <p>Ingresa ahora</p>
           <p>Sigue lo que te interesa</p>
         </Col>
-        <Col className="col col-right">
+        <Col md={4} xs={12} className="col col-right">
           <p><img src={logo} alt="Logo" className="logo" /></p>
           <h2>Descrubre lo que está pasando</h2>
           <ul className="list">

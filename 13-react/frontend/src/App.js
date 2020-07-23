@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import {BrowserRouter} from 'react-router-dom';
+import { ToastProvider } from 'react-toast-notifications'
 
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './assets/icons/style.css';
@@ -25,12 +26,14 @@ function App() {
   }, []);
   return (
     <BrowserRouter>
+      <ToastProvider>
         {
           isAuth ?
             <Private logout={logout} /> 
           :
             <Public setAuth={setAuth} />
         }
+      </ToastProvider>  
     </BrowserRouter>
   );
 }

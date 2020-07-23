@@ -1,17 +1,15 @@
 import React, { useState } from "react";
+import { useToasts } from 'react-toast-notifications';
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 import Col from "react-bootstrap/Col";
 import Row from "react-bootstrap/Row";
-import {
-  NotificationContainer,
-  NotificationManager,
-} from "react-notifications";
 import axios from "axios";
 import "react-notifications/lib/notifications.css";
 import "./index.css";
 
 function NewTweet(props) {
+  const { addToast } = useToasts();
   const [content, setContent] = useState("");
   const [image, setImage] = useState("");
 
@@ -51,16 +49,22 @@ function NewTweet(props) {
               props.setTweet(content);
               setContent("");
               setImage("");
-              NotificationManager.success("El tweet fue enviado", "Éxito");
+              addToast("Tweet enviado", {
+                appearance: 'success',
+                autoDismiss: true,
+              });
             });
         } else {
-          NotificationManager.error("Debes ingresar un texto", "Error");
+          addToast("Debes ingresar un texto", {
+            appearance: 'error',
+            autoDismiss: true,
+          });
         }
       } else {
-        NotificationManager.error(
-          `El mensaje no puede tener más de ${maxCaracteres} caracteres`,
-          "Error"
-        );
+        addToast("Error", {
+          appearance: 'error',
+          autoDismiss: true,
+        });
       }
     }
   };
@@ -84,11 +88,11 @@ function NewTweet(props) {
           {image && <img src={image} alt="image" className="image" />}
         </Form.Group>
         <Row>
-          <Col md={9}>
+          <Col md={9} xs={9}>
             <Form.Group controlId="">
               <Form.File
                 id="image"
-                label="Seleccione su imagen"
+                label
                 custom
                 onChange={(event) => {
                   handleImage(event.target);
@@ -96,7 +100,7 @@ function NewTweet(props) {
               />
             </Form.Group>
           </Col>
-          <Col md={3}>
+          <Col md={3} xs={3}>
             <Button
               onClick={() => {
                 handleSubmit();
@@ -111,7 +115,6 @@ function NewTweet(props) {
           </Col>
         </Row>
       </Form>
-      <NotificationContainer />
     </div>
   );
 }

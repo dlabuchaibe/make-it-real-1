@@ -1,5 +1,5 @@
 .new-tweet{
-    
+    margin-bottom: 20px;
 }
 .new-tweet .title{
     margin: 0;
@@ -12,3 +12,10 @@
 .new-tweet .form-group .image{
     max-width: 100%;
 }
+.new-tweet .form-group .custom-file-label{
+    border: none;
+    width: 162px;
+}
+ .custom-file-input:lang(en)~.custom-file-label::after {
+     content: "Seleccionar imagen"
+ }

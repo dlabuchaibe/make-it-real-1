@@ -16,7 +16,7 @@ function PasswordRecovery(props) {
 
   return (
     <Row className="justify-content-md-center">
-      <Col xs={5}>
+      <Col md={5}>
         <Form className="form">
         <h3>Recupera tu clave</h3>
           <Form.Group controlId="formBasicEmail">
