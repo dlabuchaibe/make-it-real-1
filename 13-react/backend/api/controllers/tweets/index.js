@@ -92,6 +92,26 @@ router.route("/like").post(auth, (req, res) => {
 });
 
 router
+.route("/comments")
+.post(auth, (req, res)=>{
+  const id = req.body.id;
+  const comment = {
+    userComment: req.body.content,
+    userId: req._id
+  };
+
+  Tweet.updateOne({ _id: id }, { $addToSet: { comments:  comment} })
+  .then((response) => {
+    res.sendStatus(200);
+  })
+  .catch((err) => {
+    res.sendStatus(500);
+  });
+
+});
+
+
+router
 .route("/comments/:id")
 .get((req, res) => {
   const id = req.params.id;

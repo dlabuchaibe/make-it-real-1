@@ -70,16 +70,19 @@ function Tweet(props) {
         >
           <span className="icon-heart"></span> {likes ? likes : 0}{" "}
         </a>
-        {props.tweet.user._id === userId && (
-          <a
-            className="icon"
-            onClick={() => {
-              deleteTweet();
-            }}
-          >
-            <span className="icon-bin"></span>
-          </a>
-        )}
+        {
+          props.delete &&
+            props.tweet.user._id === userId && (
+              <a
+                className="icon"
+                onClick={() => {
+                  deleteTweet();
+                }}
+              >
+                <span className="icon-bin"></span>
+              </a>
+            )
+        }
       </li>
     </ul>
   );

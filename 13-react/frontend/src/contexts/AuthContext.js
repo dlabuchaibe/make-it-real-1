@@ -2,7 +2,7 @@ import React, { createContext, useContext } from 'react';
 
 const AuthContext = createContext();
 
-const AuthenticationProvider = () => {
+const AuthenticationProvider = props => {
 
   const login = () => {
     console.log("login");
@@ -15,10 +15,9 @@ const AuthenticationProvider = () => {
           value={{
               login,
               logout
-          }}
-          >
-      </AuthContext.Provider>
+          }} {...props} 
+      />
   )
 }
 
-export default AuthContext;
+export {AuthContext, AuthenticationProvider};

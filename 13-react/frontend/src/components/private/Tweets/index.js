@@ -71,6 +71,7 @@ function Tweets() {
                   key={tweet._id}
                   tweet={tweet}
                   deleteTweet={deleteTweet}
+                  delete={true}
                 />
               ))}
               <p className="more">
