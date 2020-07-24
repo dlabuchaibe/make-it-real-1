@@ -33,6 +33,7 @@ function NewTweet(props) {
         if (content.length > 0) {
           const token = localStorage.getItem("token");
           const username = localStorage.getItem("username");
+          const id = localStorage.getItem("id");
           const tweet = {
             content,
             image,
@@ -53,7 +54,8 @@ function NewTweet(props) {
                 comments: [],
                 createdAt: response.data.createdAt,
                 user: {
-                  username:username
+                  username:username,
+                  _id: id
                 }
               }
               props.setTweets([ newTweet,...props.tweets]);

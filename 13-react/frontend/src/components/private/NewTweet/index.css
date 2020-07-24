@@ -14,7 +14,7 @@
 }
 .new-tweet .form-group .custom-file-label{
     border: none;
-    width: 162px;
+    width: 180px;
 }
  .custom-file-input:lang(en)~.custom-file-label::after {
      content: "Seleccionar imagen"

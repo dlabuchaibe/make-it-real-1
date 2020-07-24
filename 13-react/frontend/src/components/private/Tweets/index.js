@@ -20,7 +20,7 @@ function Tweets() {
 
         const url = `${process.env.REACT_APP_API_URL}/api/tweets?page=${currentPage}&limit=5`;
         Axios.get(url).then((response) => {
-          setHasMore(response.data.has_more);
+          setHasMore(response.data.hasMore);
           setTweets([...tweets, ...response.data.tweets]);
           setCurrentPage(currentPage + 1);
           setCount(response.data.count);

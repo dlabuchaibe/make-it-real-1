@@ -18,19 +18,19 @@ router
       .populate("user", ["username"])
       .populate("comments.userId", ["username"])
       .sort({ createdAt: -1 })
-      .limit(limit * 1)
+      .limit(limit)
       .skip((page - 1) * limit)
       .exec();
 
     const count = await Tweet.countDocuments();
-    const pageCount = Math.ceil(count / req.query.limit);
+    const pageCount = Math.ceil(count / limit);
 
     res.json({
       tweets,
-      totalPages: Math.ceil(count / limit),
+      totalPages: pageCount,
       count: count,
       currentPage: page,
-      has_more: paginate.hasNextPages(req)(pageCount),
+      hasMore: paginate.hasNextPages(req)(pageCount),
     });
   })
   .post(auth, (req, res) => {

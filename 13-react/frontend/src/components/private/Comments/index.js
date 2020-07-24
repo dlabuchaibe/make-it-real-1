@@ -39,7 +39,6 @@ function UserTimeline() {
         <p>
           <Link to="/">Regresar</Link>
         </p>
-        <h2>Página del tweet {params.tweet}</h2>
         {loading ? (
           <Loading />
         ) : (
