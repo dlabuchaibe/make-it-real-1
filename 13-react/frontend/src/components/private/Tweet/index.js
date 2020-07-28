@@ -53,7 +53,7 @@ function Tweet(props) {
       </li>
       <li>{props.tweet.content}</li>
       {props.tweet.image && (
-        <li>
+        <li className="image-container">
           <img className="image" src={props.tweet.image} alt="imagen" />
         </li>
       )}

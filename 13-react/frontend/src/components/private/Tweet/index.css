@@ -1,7 +1,10 @@
 .tweet{
     border-bottom: 1px dashed #CCC;
     margin: 0 0 10px 0;
-    padding: 0 0 10px 0;
+    padding: 10px 0 10px 0;
+}
+.tweet:hover{
+    background: #EEE;
 }
 .tweet li{
     font-size: 14pxpx;
@@ -12,7 +15,10 @@
 .tweet li:first-child{
     font-size: 11px;
 }
-
+.tweet li.image-container{
+    margin: 5px 0;
+    text-align: center;
+}
 .tweet .image{
     max-width: 100%;
 }

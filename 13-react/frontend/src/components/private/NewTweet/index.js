@@ -93,15 +93,17 @@ function NewTweet(props) {
           />
         </Form.Group>
         <Form.Group controlId="">
+          <Col md={12} xs={12}>
           {image && <img src={image} alt="image" className="image" />}
+            </Col>
         </Form.Group>
         <Row>
           <Col md={9} xs={9}>
-            <Form.Group controlId="">
+            
+            <Form.Group controlId="" className="file-group">
               <Form.File
                 id="image"
-                label
-                custom
+                label={<span className="icon-image"></span>}
                 onChange={(event) => {
                   handleImage(event.target);
                 }}
@@ -115,10 +117,10 @@ function NewTweet(props) {
               }}
               variant="primary"
               type="button"
-              className="float-right"
+              className="button-rounded"
               disabled={!content}
             >
-              Enviar
+              Twittear
             </Button>
           </Col>
         </Row>
