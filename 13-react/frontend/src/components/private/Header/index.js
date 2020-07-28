@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { Link, useHistory } from "react-router-dom";
 import Navbar from "react-bootstrap/Navbar";
 import DropdownButton from "react-bootstrap/DropdownButton";
@@ -7,6 +7,7 @@ import logo from "./../../../assets/images/logo.svg";
 import "./index.css";
 
 function Header(props) {
+
   const history = useHistory();
   const [name, setName] = useState("");
 
