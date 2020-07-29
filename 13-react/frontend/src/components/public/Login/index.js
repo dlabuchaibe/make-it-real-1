@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useContext} from 'react';
 import {Link} from 'react-router-dom';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
@@ -7,12 +7,15 @@ import Row from 'react-bootstrap/Row';
 import { useToasts } from 'react-toast-notifications';
 import axios from 'axios';
 import { useHistory } from "react-router-dom";
+
+import {AuthContext} from './../../../contexts/AuthContext';
 import Loading from './../../common/Loading';
 import 'react-notifications/lib/notifications.css';
 import './index.css';
 
 
-function Login(props) {
+function Login() {
+  const auth = useContext(AuthContext);
   const { addToast } = useToasts();
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
@@ -38,11 +41,13 @@ function Login(props) {
         autoDismiss: true,
       })
         setTimeout(()=>{
-          localStorage.setItem('token', token);
-          localStorage.setItem('name', name);
-          localStorage.setItem('id', id);
-          localStorage.setItem('username', username);
-          props.setAuth(true);
+          const user = {
+            token,
+            name,
+            id, 
+            username
+          };
+          auth.login(user);
           history.push("/");
         }, 3000);
         
@@ -65,6 +70,7 @@ function Login(props) {
         });
       }, 3000)
     })
+    
   }
 
   return (

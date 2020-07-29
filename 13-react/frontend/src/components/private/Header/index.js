@@ -3,11 +3,13 @@ import { Link, useHistory } from "react-router-dom";
 import Navbar from "react-bootstrap/Navbar";
 import DropdownButton from "react-bootstrap/DropdownButton";
 import Dropdown from "react-bootstrap/Dropdown";
+
+import {AuthContext} from './../../../contexts/AuthContext';
 import logo from "./../../../assets/images/logo.svg";
 import "./index.css";
 
-function Header(props) {
-
+function Header() {
+  const auth = useContext(AuthContext);
   const history = useHistory();
   const [name, setName] = useState("");
 
@@ -16,11 +18,7 @@ function Header(props) {
   }, [])
 
   const logout = () => {
-    localStorage.removeItem("token");
-    localStorage.removeItem("name");
-    localStorage.removeItem("id");
-    localStorage.removeItem("username");
-    props.logout();
+    auth.logout();
     history.push("/");
   };
   return (

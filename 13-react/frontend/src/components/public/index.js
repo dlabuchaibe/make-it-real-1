@@ -12,7 +12,7 @@ function Public(props) {
         <Container>
                 <Switch>
                     <Route exact path="/" component={Home}  />
-                    <Route path="/signin" render={()=><Login setAuth={props.setAuth} />} />
+                    <Route path="/signin" component={Login} />
                     <Route path="/signup" component={SignUp} />
                     <Route path="/passwordRecovery" component={PasswordRecovery} />
                 </Switch>
