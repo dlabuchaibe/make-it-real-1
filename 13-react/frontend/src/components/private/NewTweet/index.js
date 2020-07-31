@@ -1,13 +1,16 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import { useToasts } from 'react-toast-notifications';
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 import Col from "react-bootstrap/Col";
 import Row from "react-bootstrap/Row";
 import axios from "axios";
+
+import {AuthContext} from './../../../contexts/AuthContext';
 import "./index.css";
 
 function NewTweet(props) {
+  const auth = useContext(AuthContext);
   const { addToast } = useToasts();
   const [content, setContent] = useState("");
   const [image, setImage] = useState("");
@@ -31,9 +34,9 @@ function NewTweet(props) {
       const maxCaracteres = 230;
       if (content.length <= maxCaracteres) {
         if (content.length > 0) {
-          const token = localStorage.getItem("token");
-          const username = localStorage.getItem("username");
-          const id = localStorage.getItem("id");
+          const token = auth.user.token;
+          const username = auth.user.username;
+          const id = auth.user.id;
           const tweet = {
             content,
             image,

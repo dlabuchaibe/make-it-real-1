@@ -14,7 +14,7 @@ function Header() {
   const [name, setName] = useState("");
 
   useEffect(()=>{
-    setName(localStorage.getItem("name"));
+    setName(auth.user.name);
   }, [])
 
   const logout = () => {

@@ -1,18 +1,20 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import { Link } from "react-router-dom";
 import Axios from "axios";
+import {AuthContext} from './../../../contexts/AuthContext';
 import "./index.css";
 
 function Tweet(props) {
+  const auth = useContext(AuthContext);
   const [likes, setLikes] = useState(0);
-  const userId = localStorage.getItem("id");
+  const userId = auth.user.id;
 
   useEffect(() => {
     setLikes(props.tweet.likes);
   }, []);
 
   const sendLike = () => {
-    const token = localStorage.getItem("token");
+    const token = auth.user.token;
     const url = `${process.env.REACT_APP_API_URL}/api/tweets/like`;
     const tweet = {
       id: props.tweet._id,

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import Axios from "axios";
 import Tweet from "../Tweet";
 import { Link, useParams } from "react-router-dom";
@@ -6,10 +6,13 @@ import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
+
+import {AuthContext} from './../../../contexts/AuthContext';
 import Loading from "../../common/Loading";
 import "./index.css";
 
 function UserTimeline() {
+  const auth = useContext(AuthContext);
   const [content, setContent] = useState("");
   const [tweet, setTweet] = useState({});
   const [loading, setLoading] = useState(true);
@@ -32,7 +35,7 @@ function UserTimeline() {
 
   const handleSubmit = () => {
         if (content.length > 0) {
-          const token = localStorage.getItem("token");
+          const token = auth.user.token;
           const id = params.tweet;
           const comment = {
             id,
